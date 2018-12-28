@@ -1,0 +1,18 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <GenerateFullPaths>true</GenerateFullPaths>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Refit" Version="4.6.58" />
+    <PackageReference Include="System.Reactive" Version="4.1.2" />
+    <PackageReference Include="System.Reactive.Linq" Version="4.1.2" />
+    <PackageReference Include="System.Reactive.Interfaces" Version="4.1.2" />
+    <PackageReference Include="System.Reactive.Core" Version="4.1.2" />
+    <PackageReference Include="Notakey.SDK" Version="2.0.2" />
+  </ItemGroup>
+
+</Project>

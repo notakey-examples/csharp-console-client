@@ -7,7 +7,7 @@ using System.IO;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Notakey.Sdk.Client.Example
+namespace Notakey.Examples.SDK.Client
 {
     class MainClass
     {
@@ -48,7 +48,7 @@ namespace Notakey.Sdk.Client.Example
                 //.Bind("b4cc9180988556fad415937cb856789050866c803c576d716e8f2576cf357bed",
                 //    "cbc9f8f769d7aa6726a4f178fe06b982cdb217ee9b8db1db8b8d281d94d6f7da",
                 //    new List<string> { "urn:notakey:auth", "urn:notakey:keyservice" })
-                
+
                 .Bind("469082d815d273fa6c410338f4e6e817a68772ca3766ad4fc3bfb4ae28b72525",
                     "d8281809e82d95d8279448d0f7c3a806691fc307a4bc66018b19ce57b4019cf6",
                      new List<string> { "urn:notakey:auth", "urn:notakey:keyservice" })
@@ -65,7 +65,7 @@ namespace Notakey.Sdk.Client.Example
                 .Subscribe(myToken => OnBound(myToken, api, userName), OnBindError);
 
             waitEvent.Reset();
-       
+
             waitEvent.WaitOne();
 
             Console.WriteLine("Finished second authentication request");
@@ -78,7 +78,7 @@ namespace Notakey.Sdk.Client.Example
             }
 
             Console.WriteLine("Will perform end-to-end encrypted message demo");
-           
+
 
             MessagingTest();
 
@@ -134,7 +134,7 @@ namespace Notakey.Sdk.Client.Example
             Console.WriteLine("SUCCESS: verification response: {0}", request.ApprovalGranted);
             Console.WriteLine("Storing keytoken {0} for user ID {1}", request.KeyToken, request.UserId);
             userKeyTokens.Add(request.KeyToken, request.UserId);
-            
+
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace Notakey.Sdk.Client.Example
         private static void MessagingTest()
         {
 
-             var sendTokenPair = userKeyTokens.Last();
+            var sendTokenPair = userKeyTokens.Last();
             userKeyTokens.Remove(sendTokenPair.Key);
             var rcvTokenPair = userKeyTokens.Last();
             userKeyTokens.Remove(rcvTokenPair.Key);
@@ -174,12 +174,13 @@ namespace Notakey.Sdk.Client.Example
                 var message = "Hello world!";
 
                 Console.WriteLine("Using keytoken {0} for send", sendTokenPair);
-                // BootstrapEntity returns NtkCryptoEntity object with Pkey field identifying current user, that can be used as receiver identifier 
+                // BootstrapEntity returns NtkCryptoEntity object with Pkey field identifying current user, that can be used as receiver identifier
                 // Pkey.Expired can be used for check if key needs to be bootstraped again
                 sender = senderCypherApi.BootstrapEntity(sendTokenPair.Key).GetAwaiter().GetResult();
                 Console.WriteLine("Registered key for sender {0} ({1}):\n{2}", sender.UserId, sender.Pkey.Uuid, sender.Pkey.ToString());
 
-                if(!sender.Pkey.Expired){
+                if (!sender.Pkey.Expired)
+                {
                     Console.WriteLine("Sender key is valid, can receive messages until {0}", sender.Pkey.ValidBefore);
                 }
 
@@ -190,10 +191,10 @@ namespace Notakey.Sdk.Client.Example
                 if (rcvCypherApi.QueryOwner().Expired)
                 {
                     Console.WriteLine("Receiver key has expired");
-                    // request new authentication and trade rcvTokenPair.Key for new key 
+                    // request new authentication and trade rcvTokenPair.Key for new key
                     // makes senes to do this before key has already expired
                     receiver = rcvCypherApi.BootstrapEntity(rcvTokenPair.Key).GetAwaiter().GetResult();
-            
+
                 }
 
                 // binary format
@@ -205,7 +206,7 @@ namespace Notakey.Sdk.Client.Example
                 Console.WriteLine("Decrypted cypher from user {0}:\n{1}", sender.UserId, gotMessage);
 
                 // serialized string in base64 and reversed sender / receiver
-                var cypher = rcvCypherApi.SendTo(sender.Pkey.Uuid, "Cool, got your message: "+gotMessage).GetAwaiter().GetResult();
+                var cypher = rcvCypherApi.SendTo(sender.Pkey.Uuid, "Cool, got your message: " + gotMessage).GetAwaiter().GetResult();
                 Console.WriteLine("Sending cypher to user {0}:\n{1} ({2} bytes)", sender.UserId, cypher, cypher.Length);
 
                 var res = senderCypherApi.ReceiveMsg(cypher).GetAwaiter().GetResult();

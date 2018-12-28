@@ -12,7 +12,7 @@
     <PackageReference Include="System.Reactive.Linq" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Interfaces" Version="4.1.2" />
     <PackageReference Include="System.Reactive.Core" Version="4.1.2" />
-    <PackageReference Include="Notakey.SDK" Version="2.0.2" />
+    <PackageReference Include="Notakey.SDK" Version="2.0.4" />
   </ItemGroup>
 
 </Project>

@@ -158,8 +158,8 @@ namespace Notakey.Examples.SDK.Client
             var rcvTokenPair = userKeyTokens.Last();
             userKeyTokens.Remove(rcvTokenPair.Key);
 
-            var senderCypherApi = new NtkCypher(ntkApi, keyStore, new NtkCryptoEntity(rcvTokenPair.Value));
-            var rcvCypherApi = new NtkCypher(ntkApi, keyStore, new NtkCryptoEntity(rcvTokenPair.Value));
+            var senderCypherApi = new NtkCypher(ntkApi, keyStore);
+            var rcvCypherApi = new NtkCypher(ntkApi, keyStore);
 
             NtkCryptoEntity sender, receiver;
 

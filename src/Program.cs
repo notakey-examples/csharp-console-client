@@ -32,11 +32,9 @@ namespace Notakey.Examples.SDK.Client
             // demo
             var api = new NtkService("https://demo.notakey.com/api", "235879a9-a3f3-42b4-b13a-4836d0fd3bf8");
 
-            // var api = new NtkService("http://wpdev.notakey.com:3000/api", "cfebd2ef-0be5-4dab-b932-88adf48c65f2");
-            //var userName = "pdzindzis";
-
             var userName = "demo";
 
+            // You can also detect if API is in good shape before requesting anything
             // api
             //     .PerformHealthCheck()
             //     .Subscribe(hc => Console.WriteLine("Health: {0} = {1}",
@@ -45,10 +43,6 @@ namespace Notakey.Examples.SDK.Client
 
             // Bind to API with client ID and secret
             api
-                //.Bind("b4cc9180988556fad415937cb856789050866c803c576d716e8f2576cf357bed",
-                //    "cbc9f8f769d7aa6726a4f178fe06b982cdb217ee9b8db1db8b8d281d94d6f7da",
-                //    new List<string> { "urn:notakey:auth", "urn:notakey:keyservice" })
-
                 .Bind("469082d815d273fa6c410338f4e6e817a68772ca3766ad4fc3bfb4ae28b72525",
                     "d8281809e82d95d8279448d0f7c3a806691fc307a4bc66018b19ce57b4019cf6",
                      new List<string> { "urn:notakey:auth", "urn:notakey:keyservice" })
@@ -192,7 +186,7 @@ namespace Notakey.Examples.SDK.Client
                 {
                     Console.WriteLine("Receiver key has expired");
                     // request new authentication and trade rcvTokenPair.Key for new key
-                    // makes senes to do this before key has already expired
+                    // makes sense to do this before key has already expired
                     receiver = rcvCypherApi.BootstrapEntity(rcvTokenPair.Key).GetAwaiter().GetResult();
 
                 }

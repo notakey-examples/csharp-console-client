@@ -30,7 +30,7 @@ namespace Notakey.Examples.SDK.Client
              */
 
             // demo
-            var api = new NtkService("https://demo.notakey.com/api", "235879a9-a3f3-42b4-b13a-4836d0fd3bf8");
+            var api = new NtkService("https://demoapi.notakey.com/api", "235879a9-a3f3-42b4-b13a-4836d0fd3bf8");
 
             var userName = "demo";
 

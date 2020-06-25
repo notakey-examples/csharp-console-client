@@ -54,7 +54,11 @@ Authentication request verification.
 
 ```csharp
 api
-    .PerformFullVerification(userName, "Notakey .NET Demo", "This is an example authentication request sent from the .NET example application", Path.GetRandomFileName())
+    .PerformFullVerification(
+        userName,
+        "Notakey .NET Demo",
+        "This is an example authentication request sent from the .NET example application",
+        Path.GetRandomFileName())
     .SingleAsync()
     .Subscribe(resp => OnVerificationResponse(resp), OnVerificationError);
 
@@ -65,10 +69,10 @@ See Program.cs for implementation details.
 
 ## Message encryption
 
-This functionality allows users to exchange encrypted data payloads where payloads are protected by end-to-end encrytion.
+This functionality allows users to exchange encrypted data payloads where payloads are protected by end-to-end encryption.
 
 * User authenticates using Notakey Authenticator when starting client application.
-* After approved authentication request user is issued a keytoken, a token string.
+* After successful authentication user is issued a keytoken, a token string.
 * Client application uses keytoken to register public key in service registry.
 
 ```csharp
@@ -79,7 +83,8 @@ var crypto = new NtkCypher(api, keyStore);
 // This allows any member of service send encrypted messages addressed to this public key.
 var owner = crypto.BootstrapEntity(keyToken);
 // Returned NtkCryptoEntity can be serialized and stored for later message reception.
-// owner.Pkey.Uuid is the unique public key ID that can be used to address messages to specific user on this device.
+// owner.Pkey.Uuid is the unique public key ID that can be used to address messages to specific user on
+// this device.
 ```
 
 ```csharp
@@ -87,7 +92,8 @@ var owner = crypto.BootstrapEntity(keyToken);
 var crypto = new NtkCypher(api, keyStore, owner);
 // ... and call RecoverEntity.
 var crypto.RecoverEntity(owner);
-// owner.Pkey.Uuid (NtkCryptoEntity Uuid) is the unique public key ID that can be used to address messages to specific user on this device.
+// owner.Pkey.Uuid (NtkCryptoEntity Uuid) is the unique public key ID that can be used to address messages to
+// specific user on this device.
 ```
 * Client announces it's NtkCryptoEntity Uuid to other members of this service, to be able to receive messages
 * Client encrypts messages addressed to specific receiver's NtkCryptoEntity Uuid
@@ -117,7 +123,11 @@ server side application and initialize only AccessToken in client application, l
 
 ```csharp
 // Bind to API can also be done using AccessToken that is stored in client
-var accessToken = new AccessToken(){ Token = "my issued token", Expires = 3600, CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds() };
+var accessToken = new AccessToken(){
+        Token = "my issued token",
+        Expires = 3600,
+        CreatedAt = DateTimeOffset.UtcNow.ToUnixTimeSeconds()
+    };
 api
     .Bind(accessToken)
     .SingleAsync()
